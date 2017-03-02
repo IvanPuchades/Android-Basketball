@@ -19,8 +19,11 @@ import com.taniafontcuberta.basketball.R;
 import com.taniafontcuberta.basketball.controller.activities.add_edit.AddEditActivity;
 import com.taniafontcuberta.basketball.controller.activities.add_edit.AddEditTeamActivity;
 import com.taniafontcuberta.basketball.controller.activities.login.LoginActivity;
+import com.taniafontcuberta.basketball.controller.managers.AtletaCallback;
+import com.taniafontcuberta.basketball.controller.managers.AtletaManager;
 import com.taniafontcuberta.basketball.controller.managers.PlayerCallback;
 import com.taniafontcuberta.basketball.controller.managers.PlayerManager;
+import com.taniafontcuberta.basketball.model.Atleta;
 import com.taniafontcuberta.basketball.model.Player;
 
 import java.util.List;
@@ -33,7 +36,7 @@ import java.util.List;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class PlayerListActivity extends AppCompatActivity implements PlayerCallback {
+public class PlayerListActivity extends AppCompatActivity implements AtletaCallback {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -41,7 +44,7 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
      */
     private boolean mTwoPane;
     private RecyclerView recyclerView;
-    private List<Player> players;
+    private List<Atleta> atletas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,66 +61,66 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        FloatingActionButton add = (FloatingActionButton) findViewById(R.id.add);
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(),AddEditActivity.class);
-                intent.putExtra("type","add");
-                startActivityForResult(intent, 0);
-            }
-        });
-        FloatingActionButton addTeam = (FloatingActionButton) findViewById(R.id.add);
-        addTeam.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Intent intent = new Intent(v.getContext(),AddEditTeamActivity.class);
-                intent.putExtra("type","add");
-                startActivityForResult(intent, 0);
-                return false;
-            }
-
-        });
-
-        FloatingActionButton searchName = (FloatingActionButton) findViewById(R.id.topName);
-        searchName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(),PlayerTopActivity.class);
-                intent.putExtra("id", "name");
-                startActivityForResult(intent, 0);
-            }
-        });
-        FloatingActionButton topBaskets = (FloatingActionButton) findViewById(R.id.topBaskets);
-        topBaskets.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(),PlayerTopActivity.class);
-                intent.putExtra("id", "baskets");
-                startActivityForResult(intent, 0);
-            }
-        });
-        FloatingActionButton topBirthDate = (FloatingActionButton) findViewById(R.id.topFechaNacimiento);
-        topBirthDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(),PlayerTopActivity.class);
-                intent.putExtra("id", "birthdate");
-                startActivityForResult(intent, 0);
-            }
-        });
-
-        topBirthDate.setOnLongClickListener(new View.OnLongClickListener() {
-          @Override
-          public boolean onLongClick(View view) {
-              Intent intent = new Intent(view.getContext(),PlayerTopBetweenActivity.class);
-              intent.putExtra("id", "birthdate2");
-              startActivityForResult(intent, 0);
-              return false;
-          }
-      }
-
-        );
+//        FloatingActionButton add = (FloatingActionButton) findViewById(R.id.add);
+//        add.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(view.getContext(),AddEditActivity.class);
+//                intent.putExtra("type","add");
+//                startActivityForResult(intent, 0);
+//            }
+//        });
+//        FloatingActionButton addTeam = (FloatingActionButton) findViewById(R.id.add);
+//        addTeam.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                Intent intent = new Intent(v.getContext(),AddEditTeamActivity.class);
+//                intent.putExtra("type","add");
+//                startActivityForResult(intent, 0);
+//                return false;
+//            }
+//
+//        });
+//
+//        FloatingActionButton searchName = (FloatingActionButton) findViewById(R.id.topName);
+//        searchName.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(view.getContext(),PlayerTopActivity.class);
+//                intent.putExtra("id", "name");
+//                startActivityForResult(intent, 0);
+//            }
+//        });
+//        FloatingActionButton topBaskets = (FloatingActionButton) findViewById(R.id.topBaskets);
+//        topBaskets.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(view.getContext(),PlayerTopActivity.class);
+//                intent.putExtra("id", "baskets");
+//                startActivityForResult(intent, 0);
+//            }
+//        });
+//        FloatingActionButton topBirthDate = (FloatingActionButton) findViewById(R.id.topFechaNacimiento);
+//        topBirthDate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(view.getContext(),PlayerTopActivity.class);
+//                intent.putExtra("id", "birthdate");
+//                startActivityForResult(intent, 0);
+//            }
+//        });
+//
+//        topBirthDate.setOnLongClickListener(new View.OnLongClickListener() {
+//          @Override
+//          public boolean onLongClick(View view) {
+//              Intent intent = new Intent(view.getContext(),PlayerTopBetweenActivity.class);
+//              intent.putExtra("id", "birthdate2");
+//              startActivityForResult(intent, 0);
+//              return false;
+//          }
+//      }
+//
+//        );
 
 
         recyclerView = (RecyclerView) findViewById(R.id.player_list);
@@ -135,17 +138,17 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        PlayerManager.getInstance().getAllPlayers(PlayerListActivity.this);
+        AtletaManager.getInstance().getAllAtletas(PlayerListActivity.this);
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        Log.i("setupRecyclerView", "                     " + players);
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(players));
+        Log.i("setupRecyclerView", "                     " + atletas);
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(atletas));
     }
 
     @Override
-    public void onSuccess(List<Player> playerList) {
-        players = playerList;
+    public void onSuccess(List<Atleta> atletaList) {
+        atletas = atletaList;
         setupRecyclerView(recyclerView);
     }
 
@@ -164,9 +167,9 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
     public class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
-        private final List<Player> mValues;
+        private final List<Atleta> mValues;
 
-        public SimpleItemRecyclerViewAdapter(List<Player> items) {
+        public SimpleItemRecyclerViewAdapter(List<Atleta> items) {
             mValues = items;
         }
 
@@ -181,28 +184,9 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
         public void onBindViewHolder(final ViewHolder holder, final int position) {
             holder.mItem = mValues.get(position);
             holder.mIdView.setText(mValues.get(position).getId().toString());
-            holder.mContentView.setText(mValues.get(position).getName());
+            holder.mContentView.setText(mValues.get(position).getNombre());
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mTwoPane) {
-                        Bundle arguments = new Bundle();
-                        arguments.putString(PlayerDetailFragment.ARG_ITEM_ID, holder.mItem.getId().toString());
-                        PlayerDetailFragment fragment = new PlayerDetailFragment();
-                        fragment.setArguments(arguments);
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.player_detail_container, fragment)
-                                .commit();
-                    } else {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, PlayerDetailActivity.class);
-                        intent.putExtra(PlayerDetailFragment.ARG_ITEM_ID, holder.mItem.getId().toString());
 
-                        context.startActivity(intent);
-                    }
-                }
-            });
         }
 
         @Override
@@ -214,7 +198,7 @@ public class PlayerListActivity extends AppCompatActivity implements PlayerCallb
             public final View mView;
             public final TextView mIdView;
             public final TextView mContentView;
-            public Player mItem;
+            public Atleta mItem;
 
             public ViewHolder(View view) {
                 super(view);

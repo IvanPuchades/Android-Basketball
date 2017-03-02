@@ -1,9 +1,9 @@
 package com.taniafontcuberta.basketball.util;
 
 public class CustomProperties {
-    public static String clientId = "BasketballOauth2app";
-    public static String clientSecret = "mySecretOAuthSecret";
+    public static String clientId = "atletasapp";
+    public static String clientSecret = "my-secret-token-to-change-in-production";
     public static String grantType = "password";
     public static String scope = "read write";
-    public static String baseUrl = "http://192.168.56.1:8080";
+    public static String baseUrl = "http://192.168.22.62:8080";
 }

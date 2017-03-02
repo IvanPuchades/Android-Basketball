@@ -1,5 +1,6 @@
 package com.taniafontcuberta.basketball.controller.services;
 
+import com.taniafontcuberta.basketball.model.Atleta;
 import com.taniafontcuberta.basketball.model.Player;
 
 import java.util.List;
@@ -65,4 +66,6 @@ public interface PlayerService {
             @Header("Authorization") String Authorization,
             @Path("birthdate") String birthdate,
             @Path("birthdate2") String birthdate2);
+
+
 }
