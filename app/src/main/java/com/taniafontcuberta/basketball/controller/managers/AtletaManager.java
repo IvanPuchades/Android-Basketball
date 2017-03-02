@@ -154,7 +154,7 @@ public class AtletaManager {
                     atletaCallback.onFailure(new Throwable("ERROR" + code + ", " + response.raw().message()));
                 }
             }
-
+//finalizado
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Log.e("AtletaManager->", "deleteAtleta: " + t);
